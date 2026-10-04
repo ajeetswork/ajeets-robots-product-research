@@ -1,0 +1,13 @@
+{
+  "name": "@ajeetswork/product-research-tools",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/smoke.test.mjs",
+    "build": "node scripts/build-summary.mjs"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
