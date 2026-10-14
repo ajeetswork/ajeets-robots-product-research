@@ -7,6 +7,12 @@
     "test": "node tests/smoke.test.mjs",
     "build": "node scripts/build-summary.mjs"
   },
+  "dependencies": {
+    "yaml": "2.6.1"
+  },
+  "devDependencies": {
+    "vitest": "2.1.4"
+  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
