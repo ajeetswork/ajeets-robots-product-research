@@ -8,7 +8,7 @@ updates:
       day: "monday"
 
   - package-ecosystem: "pip"
-    directory: "/scripts"
+    directory: "/scripts/research-sync"
     target-branch: "main"
     schedule:
       interval: "weekly"
@@ -18,4 +18,5 @@ updates:
     directory: "/"
     target-branch: "main"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+      day: "monday"
