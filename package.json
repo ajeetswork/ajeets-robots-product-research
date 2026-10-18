@@ -4,7 +4,8 @@
   "private": false,
   "type": "module",
   "scripts": {
-    "test": "node tests/smoke.test.mjs",
+    "test": "vitest run",
+    "smoke": "node tests/smoke.test.mjs",
     "build": "node scripts/build-summary.mjs"
   },
   "dependencies": {
