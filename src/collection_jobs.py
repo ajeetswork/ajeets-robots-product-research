@@ -4,8 +4,11 @@ from .collection_api import ProductResearchApiClient, collect_all
 
 
 def export_approved_supplier_candidates(client: ProductResearchApiClient) -> list[dict]:
-    page = client.list_supplier_candidates_page(status="approved", limit=50)
-    return page.get("items", [])
+    return collect_all(
+        client.list_supplier_candidates_page,
+        status="approved",
+        limit=50,
+    )
 
 
 def sync_active_research_sources(client: ProductResearchApiClient) -> list[dict]:
@@ -22,8 +25,12 @@ def recent_quote_preview(client: ProductResearchApiClient) -> list[dict]:
 
 
 def build_price_review_index(client: ProductResearchApiClient, review_date: str) -> dict[str, dict]:
-    page = client.list_price_observations_page(review_date=review_date, limit=100)
-    return {row["sku"]: row for row in page.get("items", [])}
+    items = collect_all(
+        client.list_price_observations_page,
+        review_date=review_date,
+        limit=100,
+    )
+    return {row["sku"]: row for row in items}
 
 
 def open_question_triage(client: ProductResearchApiClient) -> list[dict]:
