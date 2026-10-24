@@ -4,6 +4,7 @@ def load_digest_items(conn, account_id):
         SELECT alert_id, priority_rank, created_at, title, summary
         FROM customer_alerts
         WHERE account_id = ? AND digest_ready = 1
+        ORDER BY priority_rank ASC, created_at ASC, alert_id ASC
         """,
         (account_id,),
     ).fetchall()
