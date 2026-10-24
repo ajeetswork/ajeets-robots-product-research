@@ -8,6 +8,7 @@ def load_manifest_rows(conn, batch_id):
         SELECT parcel_id, dispatch_sequence, customer_name, zone_code, carrier_code
         FROM outbound_parcels
         WHERE batch_id = ?
+        ORDER BY dispatch_sequence ASC, parcel_id ASC
         """,
         (batch_id,),
     ).fetchall()
