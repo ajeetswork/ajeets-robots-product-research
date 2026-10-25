@@ -23,7 +23,7 @@ def patch_order_status(request, repo, order_id: str):
     require_role(context, {"ops_admin"})
     payload = request.json()
     new_status = payload["status"]
-    updated = repo.update_order_status(order_id, new_status)
+    updated = repo.update_order_status_for_workspace(context.workspace_id, order_id, new_status)
     if not updated:
         return {"status": 404}
     return {"status": 204}
@@ -71,9 +71,8 @@ def search_activity(request, repo):
     context = require_workspace(request)
     require_role(context, {"ops_admin"})
     actor_id = request.query_params.get("actor_id")
-    requested_workspace = request.query_params.get("workspace_id", context.workspace_id)
     limit = min(int(request.query_params.get("limit", "50")), 200)
-    rows = repo.list_activity_for_workspace(requested_workspace, actor_id, limit)
+    rows = repo.list_activity_for_workspace(context.workspace_id, actor_id, limit)
     return {
         "status": 200,
         "body": [
