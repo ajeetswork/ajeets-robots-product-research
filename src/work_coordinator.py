@@ -14,10 +14,10 @@ def refresh_vendor_snapshot(vendor_id, product_ids, catalog, mutex: RedisMutex):
     if token is None:
         return {"status": "busy"}
 
-    if not product_ids:
-        return {"status": "empty", "updated": 0}
-
     try:
+        if not product_ids:
+            return {"status": "empty", "updated": 0}
+
         updated = catalog.refresh_snapshot(vendor_id, product_ids)
         return {"status": "ok", "updated": updated}
     finally:
@@ -30,10 +30,12 @@ def rebuild_pricing_cache(category_id, pricing, cache, mutex: RedisMutex):
     if token is None:
         return {"status": "busy"}
 
-    rows = pricing.fetch_category(category_id)
-    cache.replace_category(category_id, rows)
-    mutex.release(key, token)
-    return {"status": "ok", "count": len(rows)}
+    try:
+        rows = pricing.fetch_category(category_id)
+        cache.replace_category(category_id, rows)
+        return {"status": "ok", "count": len(rows)}
+    finally:
+        mutex.release(key, token)
 
 
 def compact_ingestion_events(partition, store, semaphore: ExpiringSemaphore):
